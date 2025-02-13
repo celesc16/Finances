@@ -1,15 +1,17 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Header from "./customer/components/Header/Header";
 import Sidebar from "./customer/components/Sidebar/Sidebar";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Main from './customer/view/Main';
-import Report from "./customer/view/report";
-import LoginForm from "./customer/auth/SignIn/LoginForm";
+import Main from './customer/pages/Main';
+import Report from "./customer/pages/report";
+import Login from "./customer/pages/Login";
+import Register from "./customer/pages/Register";
+import { useAuth } from "./customer/context/authContext"; // Solo usa useAuth
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { isAuthenticated } = useAuth(); // Ahora useAuth funciona correctamente
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
@@ -18,13 +20,6 @@ function App() {
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      setIsAuthenticated(true);
-    }
-  }, []);
 
   return (
     <div className={`${darkMode && 'dark'} font-quickSand`}>
@@ -45,15 +40,21 @@ function App() {
           {/* Si no está autenticado, muestra el Login, de lo contrario redirige a Main */}
           <Route 
             path="/login" 
-            element={isAuthenticated ? <Navigate to="/" /> : <LoginForm setAuthenticated={setIsAuthenticated} />} 
+            element={isAuthenticated ? <Navigate to="/" /> : <Login />} 
           />
-          
+
+          {/* Si se registra, redirige al login */}
+          <Route  
+            path='/register' 
+            element={isAuthenticated ? <Navigate to='/login' /> : <Register />}
+          />
+            
           {/* Ruta principal, visible solo si el usuario está autenticado */}
           <Route 
             path="/" 
             element={isAuthenticated ? <Main /> : <Navigate to="/login" />} 
           />
-          
+            
           {/* Ruta de reportes, visible solo si el usuario está autenticado */}
           <Route 
             path="/report" 
