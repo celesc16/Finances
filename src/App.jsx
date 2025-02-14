@@ -1,17 +1,18 @@
 import { useState } from "react";
-import Header from "./customer/components/Header/Header";
-import Sidebar from "./customer/components/Sidebar/Sidebar";
+import Header from "./customer/components/Header";
+import Sidebar from "./customer/components/Sidebar";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Main from './customer/pages/Main';
 import Report from "./customer/pages/report";
 import Login from "./customer/pages/Login";
 import Register from "./customer/pages/Register";
 import { useAuth } from "./customer/context/authContext"; // Solo usa useAuth
+import Transactions from "./customer/pages/Transactions";
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const { isAuthenticated } = useAuth(); // Ahora useAuth funciona correctamente
+  const { isAuthenticated } = useAuth(); 
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
@@ -22,7 +23,7 @@ function App() {
   };
 
   return (
-    <div className={`${darkMode && 'dark'} font-quickSand`}>
+    <div className={`${darkMode && 'dark'} font-quickSand `}>
       {/* Mostrar Header y Sidebar solo si está autenticado */}
       {isAuthenticated && (
         <>
@@ -35,7 +36,7 @@ function App() {
         </>
       )}
 
-      <div className="min-h-screen bg-white dark:bg-gray-800 text-black dark:text-white">  
+      <div className="min-h-screen bg-white dark:bg-gray-900 text-black dark:text-white">  
         <Routes>
           {/* Si no está autenticado, muestra el Login, de lo contrario redirige a Main */}
           <Route 
@@ -60,6 +61,12 @@ function App() {
             path="/report" 
             element={isAuthenticated ? <Report /> : <Navigate to="/login" />} 
           />
+
+          <Route  
+            path="/transaction"
+            element={isAuthenticated ? <Transactions /> : <Navigate to="/login" />} 
+          />
+
         </Routes>
       </div>
     </div>

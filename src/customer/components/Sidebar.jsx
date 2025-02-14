@@ -1,6 +1,8 @@
 import { NavLink } from "react-router-dom";
 import { BarChart2,Megaphone, DollarSign,FileArchive,Settings,Home, Handshake, LogOut } from "lucide-react";
-import { useAuth } from "../../context/authContext";
+import { useAuth } from "../context/authContext";
+import PropTypes from "prop-types";
+
 
 function Sidebar({ isSidebarOpen }) {
 
@@ -8,7 +10,7 @@ function Sidebar({ isSidebarOpen }) {
 
   const SIDEBAR_ITEMS = [
     { name: "Inicio", icon: Home, color: "#005187", href: "/" },
-    { name: "Transacciones", icon: Handshake, color: "#8B5CF6", href: "/transacciones" },
+    { name: "Transacciones", icon: Handshake, color: "#8B5CF6", href: "/transaction" },
     { name: "Reportes", icon: Megaphone, color: "#EC4899", href: "/report" },
     { name: "Presupuestos", icon: DollarSign, color: "#10B981", href: "/presupuestos" },
     { name: "Objetivos", icon: FileArchive, color: "#F59E0B", href: "/objectivo" },
@@ -19,7 +21,7 @@ function Sidebar({ isSidebarOpen }) {
   return (
     <aside
       className={`fixed top-0 left-0 z-40 w-64 h-screen pt-20 bg-white border-r border-gray-200
-        sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700 transition-transform duration-300 ease-in-out ${
+        sm:translate-x-0 dark:bg-gray-900 dark:border-gray-800 transition-transform duration-300 ease-in-out ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
     >
@@ -47,6 +49,11 @@ function Sidebar({ isSidebarOpen }) {
       </div>
     </aside>
   );
+}
+
+//Definicion de PropTypes
+Sidebar.propTypes = {
+  isSidebarOpen: PropTypes.bool.isRequired,
 }
 
 export default Sidebar;
