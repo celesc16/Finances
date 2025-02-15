@@ -20,7 +20,7 @@ function Sidebar({ isSidebarOpen }) {
 
   return (
     <aside
-      className={`fixed top-0 left-0 z-40 w-64 h-screen pt-20 bg-white border-r border-gray-200
+      className={`fixed top-0 left-0 z-40 w-64 h-screen pt-20 bg-white border-r border-gray-300
         sm:translate-x-0 dark:bg-gray-900 dark:border-gray-800 transition-transform duration-300 ease-in-out ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}

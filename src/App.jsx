@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Header from "./customer/components/Header";
 import Sidebar from "./customer/components/Sidebar";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Main from './customer/pages/Main';
 import Report from "./customer/pages/report";
 import Login from "./customer/pages/Login";
@@ -26,14 +26,14 @@ function App() {
     <div className={`${darkMode && 'dark'} font-quickSand `}>
       {/* Mostrar Header y Sidebar solo si está autenticado */}
       {isAuthenticated && (
-        <>
+        <div>
           <Header 
             toggleDarkMode={toggleDarkMode} 
             darkMode={darkMode}
             toggleSidebar={toggleSidebar}
           /> 
           <Sidebar isSidebarOpen={isSidebarOpen} />
-        </>
+        </div>
       )}
 
       <div className="min-h-screen bg-white dark:bg-gray-900 text-black dark:text-white">  
