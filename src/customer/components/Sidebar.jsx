@@ -13,7 +13,7 @@ function Sidebar({ isSidebarOpen }) {
     { name: "Transacciones", icon: Handshake, color: "#8B5CF6", href: "/transaction" },
     { name: "Reportes", icon: Megaphone, color: "#EC4899", href: "/report" },
     { name: "Presupuestos", icon: DollarSign, color: "#10B981", href: "/presupuestos" },
-    { name: "Objetivos", icon: FileArchive, color: "#F59E0B", href: "/objectivo" },
+    { name: "Metas", icon: FileArchive, color: "#F59E0B", href: "/goal" },
     { name: "Analisis", icon:  BarChart2, color: "#6366f1", href: "/analisis" },
     { name: "Settings", icon: Settings, color: "#6EE7B7", href: "/settings" }
   ];

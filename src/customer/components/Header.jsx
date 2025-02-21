@@ -1,6 +1,5 @@
 import { Menu, BadgeDollarSign, Sun, Moon } from "lucide-react";
 import { NavLink } from "react-router-dom";
-import PropTypes from "prop-types";
 
 function Header({ darkMode, toggleDarkMode , toggleSidebar }) {
   return (
@@ -46,13 +45,6 @@ function Header({ darkMode, toggleDarkMode , toggleSidebar }) {
       </div>
     </nav>
   );
-}
-
-Header.propTypes = {
-  darkMode: PropTypes.bool.isRequired,
-  toggleDarkMode: PropTypes.bool.isRequired,
-  toggleSidebar: PropTypes.isRequired,
-
 }
 
 export default Header;

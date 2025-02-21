@@ -1,3 +1,4 @@
+
 import CardTable from "../components/Tables/CardTable";
 import Form from "../components/Form";
 import Modal from "../components/Modal/Modal"
@@ -5,7 +6,7 @@ import { FilePenLine, OctagonX } from "lucide-react";
 import { useState , useEffect } from "react";
 import { useTransactions } from "../hooks/useTransaction";
 
-function Transaction() {
+function Goal() {
   const { data , loading , error, handleDeleteTransaction, createTransaction , handleUpdateTransaction } = useTransactions();
   const [editingTransaction, setEditingTransaction] = useState(null);
   const [isModalOpen , setIsModalOpen] = useState(false);
@@ -82,8 +83,8 @@ function Transaction() {
 
   return(
     <div className="mt-14 sm:ml-64 p-6">
-      <h2 className="text-xl font-semibold mt-8">Transacciónes</h2>
-      {loading && <p>Cargando Transacciones</p>}
+      <h2 className="text-xl font-semibold mt-8">Metas</h2>
+      {loading && <p>Cargando Metas</p>}
       {error && <p>Error: {error.message}</p>}
       {!loading && !error && (
         <>
@@ -98,7 +99,7 @@ function Transaction() {
       
           <Modal isOpen={isModalOpen} onClose={handleCancel}>
             <Form
-              title={editingTransaction ? "Editar Transacción" : "Nueva Transacción"}
+              title={editingTransaction ? "Editar Metas" : "Nueva Metas"}
               fields={transactionFields}
               onSubmit={handleSubmit}
               onCancel={handleCancel}
@@ -112,4 +113,4 @@ function Transaction() {
 }
 
 
-export default Transaction
+export default Goal
