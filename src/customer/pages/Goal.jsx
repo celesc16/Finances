@@ -4,22 +4,23 @@ import Form from "../components/Form";
 import Modal from "../components/Modal/Modal"
 import { FilePenLine, OctagonX } from "lucide-react";
 import { useState , useEffect } from "react";
-import { useTransactions } from "../hooks/useTransaction";
+import { useGoal } from "../hooks/useGoal";
+
 
 function Goal() {
-  const { data , loading , error, handleDeleteTransaction, createTransaction , handleUpdateTransaction } = useTransactions();
-  const [editingTransaction, setEditingTransaction] = useState(null);
+  const { data , loading , error, handleDeleteGoal , createGoal , handleUpdateGoal } = useGoal();
+  const [editingGoal, setEditingGoal] = useState(null);
   const [isModalOpen , setIsModalOpen] = useState(false);
-  const columnsTransalation = {
-    type: "Tipo", 
-    amount: "Monto",
-    date: "Fecha",
+  const columnsGoal = {
+    name: "Nombre", 
+    deadLine: "Fecha Limite",
+    currentAmount: "Monto Final",
+    targetAmount: "Monto Objetivo",
     description: "Descripcion",
-    paymentMethod: "Metodos de pago",
-    sourceAccounts: "Cuenta",
+
   };
 
-  const columns = Object.keys(columnsTransalation)
+  const columns = Object.keys(columnsGoal)
 
   useEffect(() => {
     if (isModalOpen) {
@@ -34,50 +35,48 @@ function Goal() {
     };
   }, [isModalOpen]);
 
-  if(loading) return <p>Cargando Transacciones</p> //muesrtra un mesaje de carga
-  if(error) return <p>Error: {error.message}</p> //muestra un mesaje de error
+  if(loading) return <p>Cargando Metas</p> //muesrtra un mesaje de carga
+  if(error) return <p>Error: {error.message}</p> 
 
-
-  const transactionFields = [ 
-    {label: "Tipo" , name: "type" , type: "text" , placeholder: "Ej: Gastos" },
-    {label: "Monto" , name: "amount" , type: "double" , placeholder: "ej:500 "},
-    {label: "Fecha" , name: "date" , type: "date" , placeholder:"ej:2025-01-10"},
-    {label: "Metodo" , name: "paymentMethod" , type: "text" , placeholder:"ej: Efectivo"},
-    {label: "Cuenta" , name : "sourceAccounts" , type: "text" , placeholder: "ej: BNA"},
+  const goalFields = [ 
+    {label: "Nombre" , name: "name" , type: "text" , placeholder: "Ej: Comprea de casa" },
+    {label: "Monto Final" , name: "currentAmount" , type: "double" , placeholder: "ej:500 "},
+    {label: "Fecha Limite" , name: "deadLine" , type: "date" , placeholder:"ej:2025-01-10"},
+    {label: "Monto Objetivo" , name: "targetAmount" , type: "double" , placeholder:"ej: 2000"},
     {label: "Descripcion" , name: "description" , type: "text" , placeholder:"ej:Compra de viveres"}
 
   ];
 
   // Función para manejar el envío del formulario
   const handleSubmit = (formData) => {
-    if(editingTransaction) {
-      handleUpdateTransaction(editingTransaction.id , formData)
+    if(editingGoal) {
+      handleUpdateGoal(editingGoal.id , formData)
     } else{
-      createTransaction(formData);
+      createGoal(formData);
     }
     setIsModalOpen(false); // Cierra el modal después de enviar
-    setEditingTransaction(null);
+    setEditingGoal(null);
   };
 
-  const handleEditTransaction = (transaction) => {
-    setEditingTransaction(transaction);
+  const handleEditGoal = (goal) => {
+    setEditingGoal(goal);
     setIsModalOpen(true);
   };
   
   const handleCancel = () => {
     setIsModalOpen(false);
-    setEditingTransaction(null);
+    setEditingGoal(null);
   };
 
   //aCIONES PARA LA TABLA
   const actions = [
     {
       icon: <FilePenLine className="w-5 h-5" />, // Ícono de editar
-      onClick: (row) => handleEditTransaction(row),
+      onClick: (row) => handleEditGoal(row),
     },
     {
       icon: <OctagonX className="w-5 h-5" />, // Ícono de eliminar
-      onClick: (row) => handleDeleteTransaction(row.id),
+      onClick: (row) => handleDeleteGoal(row.id),
     },
   ];
 
@@ -90,7 +89,7 @@ function Goal() {
         <>
           <CardTable 
             data={data} 
-            columns={columns.map((col) => columnsTransalation[col])} 
+            columns={columns.map((col) => columnsGoal[col])} 
             columnKeys={columns}
             actions={actions} 
             darkMode={true} 
@@ -99,11 +98,11 @@ function Goal() {
       
           <Modal isOpen={isModalOpen} onClose={handleCancel}>
             <Form
-              title={editingTransaction ? "Editar Metas" : "Nueva Metas"}
-              fields={transactionFields}
+              title={editingGoal ? "Editar Metas" : "Nueva Metas"}
+              fields={goalFields}
               onSubmit={handleSubmit}
               onCancel={handleCancel}
-              initialData={editingTransaction}
+              initialData={editingGoal}
             />
           </Modal>
         </>

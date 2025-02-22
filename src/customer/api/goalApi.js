@@ -1,26 +1,45 @@
-import { API_BASE_URL } from "./apiConfig"
-import axios from "axios"
+import axiosInstance from "./apiConfig"
 
-//Crear una meta
-export async function postGoal(goalData) {
+//Obtener todas las transacciones
+export async function getGoals() {
     try{
-        const response = await  axios.post(`${API_BASE_URL}/goals` , goalData);
+        const response = await axiosInstance.get('/goals');
         return response.data;
-    }catch(error){
-        console.error("Error creating goal" , error);
+    } catch(error){
+        console.error("Error fetching transaction: " , error);
         throw error;
     }
-
 }
 
-//Elimminar una transaccion
-export async function deleteGoal(id,goalData) {
+//Crear una nueva transaccion 
+export async function postGoal(goalData) {
     try{
-        const response = await axios.post(`${API_BASE_URL}/goals/${id}` , goalData);
+        const response = await axiosInstance.post('/goals', goalData);
         return response.data;
-    }catch(error){
-        console.error("Error deleting goal" , error);
+    } catch(error){
+        console.error("Eerror creating transaction" , error);
         throw error;
     }
+}
 
+//Actualizar una transaccion existentes 
+export async function updateGoal(id,goalData) {
+    try{
+        const response = await axiosInstance.put(`/goals/${id}`, goalData);
+        return response.data;
+    } catch(error){
+        console.error("Eerror updating transaction" , error);
+        throw error;
+    }
+}
+
+//Eliminar una transaccion 
+export async function deleteGoal(id, goalData) {
+    try{
+        const response = await axiosInstance.delete(`/goals/${id}`, goalData);
+        return response.data;
+    } catch(error){
+        console.error("Error delete transaction" , error);
+        throw error;
+    }
 }
